@@ -1,6 +1,11 @@
 import React, { Component } from "react";
+import withStyles from 'react-jss';
 import * as fx from "../../fxjs";
 import * as fxop from "../../fxjs/operators";
+
+import Stream from '../Stream'
+
+import * as styles from './App.jss.js'
 
 fx.of(1, 2, 3)
   .pipe(
@@ -11,8 +16,12 @@ fx.of(1, 2, 3)
 
 class App extends Component {
   render() {
-    return <div className="App">Test</div>;
+    return (
+      <div className={this.props.classes.app}>
+        <Stream streamId={0} />
+      </div>
+    );
   }
 }
 
-export default App;
+export default withStyles(styles)(App);

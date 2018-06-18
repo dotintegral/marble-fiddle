@@ -46,17 +46,15 @@ const FakeObservable = cb => {
     subscribe: (f, e = () => {}, c = () => {}) => {
       const onValue = v => {
         f(v.value);
-        console.log(inspect(streamId));
       };
 
       const onError = e;
 
       const onComplete = () => {
         c();
-        console.log(complete(streamId));
       };
 
-      stream$.subscribe(onValue);
+      stream$.subscribe(onValue, null, onComplete);
     }
   };
 };
