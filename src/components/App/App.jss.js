@@ -1,3 +1,5 @@
 export const app = {
-  background: 'white'
-}
+  background: "white",
+  margin: 12,
+  fontSize: 18
+};

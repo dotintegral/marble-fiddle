@@ -7,7 +7,7 @@ import { before, after, register, inspect, error, complete } from "./inspector";
 
 const FakeObservable = cb => {
   const observableId = nextObservable();
-  const { stream$, name, streamId } = cb(observableId);
+  const { stream$, name, streamId, initialValues } = cb(observableId);
 
   register({
     name,
@@ -15,16 +15,21 @@ const FakeObservable = cb => {
     observableId
   });
 
+  if (initialValues) {
+    initialValues.forEach(v => after({ streamId, observableId })(v));
+  }
+
   const createFO = f =>
     FakeObservable(id => ({
       stream$: stream$.pipe(
         rxop.tap(before({ streamId, observableId: id })),
-        rxop.flatMap(({ value, timeId }) =>
+        rxop.flatMap(({ value, timeId, valueId }) =>
           rx.of(value).pipe(
             f.real(),
             rxop.map(realVal => ({
               value: realVal,
-              timeId: f.transformTime(timeId)
+              timeId: f.transformTime(timeId),
+              valueId: f.transformValue(valueId)
             }))
           )
         ),
@@ -54,7 +59,7 @@ const FakeObservable = cb => {
         c();
       };
 
-      stream$.subscribe(onValue, null, onComplete);
+      return stream$.subscribe(onValue, null, onComplete);
     }
   };
 };
