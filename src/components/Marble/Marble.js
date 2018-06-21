@@ -18,6 +18,7 @@ const marbleClasses = (classes, v) => {
     }
 
     default: {
+      console.log(v);
       result.push(classes.marbleGeneric);
     }
   }

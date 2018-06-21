@@ -23,16 +23,7 @@ const FakeObservable = cb => {
     FakeObservable(id => ({
       stream$: stream$.pipe(
         rxop.tap(before({ streamId, observableId: id })),
-        rxop.flatMap(({ value, timeId, valueId }) =>
-          rx.of(value).pipe(
-            f.real(),
-            rxop.map(realVal => ({
-              value: realVal,
-              timeId: f.transformTime(timeId),
-              valueId: f.transformValue(valueId)
-            }))
-          )
-        ),
+        f.transform(),
         rxop.tap(after({ streamId, observableId: id }))
       ),
       name: f.name,

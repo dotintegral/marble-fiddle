@@ -9,8 +9,6 @@ import Marble from "../Marble";
 
 import * as styles from "./Stream.jss";
 
-console.log(Marble);
-
 //
 //
 //

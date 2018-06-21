@@ -14,7 +14,8 @@ const allOperators = Object.keys(rxop);
 const supportedOperators = Object.keys(fxop);
 const toBeImplemented = R.without(supportedOperators)(allOperators);
 
-console.log("To be implemented:", { toBeImplemented });
+console.log("Supported:", supportedOperators.length);
+console.log("To be implemented:", toBeImplemented.length, { toBeImplemented });
 
 class App extends Component {
   constructor() {
@@ -29,10 +30,11 @@ class App extends Component {
     fx.of(1, 2, 3, 4, 5, 6)
       .pipe(
         fxop.map(x => x + 1),
-        fxop.count(),
+        fxop.scan((acc, x) => acc + x, 0),
         fxop.filter(x => x % 2 === 0),
         fxop.map(x => x * 2),
-        fxop.map(x => "" + x)
+        fxop.map(x => "" + x),
+        fxop.count()
       )
       .subscribe(x => console.log(x), null, () => {
         this.setState({ streamId: 0 });
