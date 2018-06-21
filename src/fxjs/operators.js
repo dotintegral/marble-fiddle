@@ -15,3 +15,11 @@ export const filter = f => ({
   transformTime: t => t,
   transformValue: v => v
 });
+
+export const count = f => ({
+  real: () => rxop.count(f),
+  name: "count",
+  transform: f,
+  transformTime: t => t,
+  transformValue: v => v
+});

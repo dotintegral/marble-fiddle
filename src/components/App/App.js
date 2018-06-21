@@ -1,11 +1,20 @@
 import React, { Component } from "react";
 import withStyles from "react-jss";
+import * as R from "ramda";
 import * as fx from "../../fxjs";
 import * as fxop from "../../fxjs/operators";
+
+import * as rxop from "rxjs/operators";
 
 import Stream from "../Stream";
 
 import * as styles from "./App.jss.js";
+
+const allOperators = Object.keys(rxop);
+const supportedOperators = Object.keys(fxop);
+const toBeImplemented = R.without(supportedOperators)(allOperators);
+
+console.log("To be implemented:", { toBeImplemented });
 
 class App extends Component {
   constructor() {
@@ -17,10 +26,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fx.of(1, 2, 3, 4)
+    fx.of(1, 2, 3, 4, 5, 6)
       .pipe(
         fxop.map(x => x + 1),
-        fxop.filter(x => x % 2),
+        fxop.count(),
+        fxop.filter(x => x % 2 === 0),
         fxop.map(x => x * 2),
         fxop.map(x => "" + x)
       )
