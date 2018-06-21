@@ -7,8 +7,17 @@ import * as styles from "./Marble.jss";
 
 const marbleClasses = ({ classes, operation, value }) => {
   const result = [classes.marble];
+  const combinationFunctions = ["concat", "merge"];
 
   if (Object.keys(fxjs).includes(operation.name)) {
+    result.push(classes.marbleCreated);
+    return result.join(" ");
+  }
+
+  if (
+    operation.streamId !== value.streamId &&
+    combinationFunctions.includes(operation.name)
+  ) {
     result.push(classes.marbleCreated);
     return result.join(" ");
   }

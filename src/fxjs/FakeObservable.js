@@ -31,6 +31,7 @@ const FakeObservable = cb => {
     }));
 
   return {
+    stream$,
     pipe: (f, ...moreFunctions) => {
       if (moreFunctions && moreFunctions.length > 0) {
         return createFO(f).pipe(...moreFunctions);

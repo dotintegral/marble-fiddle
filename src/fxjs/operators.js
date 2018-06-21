@@ -1,6 +1,13 @@
 import * as rxop from "rxjs/operators";
 import { nextValue } from "./id";
 
+export const concat = args => {
+  return {
+    transform: () => rxop.concat(args.stream$),
+    name: "concat"
+  };
+};
+
 // TODO should be next time/stream
 export const count = f => ({
   transform: () => stream$ =>
@@ -46,6 +53,13 @@ export const mapTo = f => ({
     })),
   name: "map"
 });
+
+export const merge = args => {
+  return {
+    transform: () => rxop.merge(args.stream$),
+    name: "merge"
+  };
+};
 
 export const scan = (f, start) => ({
   transform: () =>

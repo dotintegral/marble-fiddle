@@ -27,8 +27,13 @@ class App extends Component {
   }
 
   componentDidMount() {
+    const s$ = fx.of(1, 2);
+    const s1$ = fx.of(1, 2);
+
     fx.of(1, 2, 3, 4, 5, 6, 7)
       .pipe(
+        fxop.merge(s$),
+        fxop.concat(s1$),
         fxop.map(x => x + 1),
         fxop.scan((acc, x) => acc + x, 0),
         fxop.filter(x => x % 2 === 0),
@@ -38,7 +43,7 @@ class App extends Component {
         fxop.tap(console.log)
       )
       .subscribe(x => console.log(x), null, () => {
-        this.setState({ streamId: 0 });
+        this.setState({ streamId: 2 });
       });
   }
 
