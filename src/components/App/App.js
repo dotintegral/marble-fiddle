@@ -27,14 +27,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fx.of(1, 2, 3, 4, 5, 6)
+    fx.of(1, 2, 3, 4, 5, 6, 7)
       .pipe(
         fxop.map(x => x + 1),
         fxop.scan((acc, x) => acc + x, 0),
         fxop.filter(x => x % 2 === 0),
         fxop.map(x => x * 2),
         fxop.map(x => "" + x),
-        fxop.count()
+        fxop.mapTo("s"),
+        fxop.tap(console.log)
       )
       .subscribe(x => console.log(x), null, () => {
         this.setState({ streamId: 0 });
