@@ -1,7 +1,7 @@
 export const row = {
   padding: 6,
   lineHeight: "24px",
-  fontFamily: "monospace"
+  fontFamily: "'Source Code Pro', monospace"
 };
 
 export const name = {

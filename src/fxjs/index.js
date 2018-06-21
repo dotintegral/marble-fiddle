@@ -7,7 +7,7 @@ export const of = (...values) => {
   const initialValues = values.map(v => ({
     value: v,
     timeId: 0,
-    valueId: nextValue()
+    valueId: nextValue(),
   }));
 
   return FakeObservable(() => ({

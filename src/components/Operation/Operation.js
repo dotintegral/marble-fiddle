@@ -15,8 +15,8 @@ const printOperation = (operation, k) => (
   <StyledOperation operation={operation} key={`operation-${k}`} />
 );
 
-const OperationCol = ({ values, classes }) => (
-  <div className={classes.column}>{values.map(printOperation)}</div>
+const OperationCol = ({ operations, classes }) => (
+  <div className={classes.column}>{operations.map(printOperation)}</div>
 );
 
 export default withStyles(styles)(OperationCol);

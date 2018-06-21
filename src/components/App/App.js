@@ -14,7 +14,7 @@ const allOperators = Object.keys(rxop);
 const supportedOperators = Object.keys(fxop);
 const toBeImplemented = R.without(supportedOperators)(allOperators);
 
-console.log("Supported:", supportedOperators.length);
+console.log("Supported:", supportedOperators.length, { supportedOperators });
 console.log("To be implemented:", toBeImplemented.length, { toBeImplemented });
 
 class App extends Component {

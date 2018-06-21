@@ -1,12 +1,19 @@
 import React from "react";
 import withStyles from "react-jss";
 
+import * as fxjs from "../../fxjs";
+
 import * as styles from "./Marble.jss";
 
-const marbleClasses = (classes, v) => {
+const marbleClasses = ({ classes, operation, value }) => {
   const result = [classes.marble];
 
-  switch (typeof v.value) {
+  if (Object.keys(fxjs).includes(operation.name)) {
+    result.push(classes.marbleCreated);
+    return result.join(" ");
+  }
+
+  switch (typeof value.value) {
     case "number": {
       result.push(classes.marbleNumber);
       break;
@@ -18,7 +25,6 @@ const marbleClasses = (classes, v) => {
     }
 
     default: {
-      console.log(v);
       result.push(classes.marbleGeneric);
     }
   }
@@ -26,8 +32,10 @@ const marbleClasses = (classes, v) => {
   return result.join(" ");
 };
 
-const Marble = ({ value, classes }) => (
-  <div className={marbleClasses(classes, value)}>{value.value}</div>
+const Marble = ({ value, operation, classes }) => (
+  <div className={marbleClasses({ classes, value, operation })}>
+    {value.value}
+  </div>
 );
 
 const HiddenMarble = ({ classes }) => <div className={classes.hiddenMarble} />;

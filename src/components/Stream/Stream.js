@@ -13,14 +13,14 @@ import * as styles from "./Stream.jss";
 //
 //
 
-const ValueCol = ({ values, valueId, classes }) => {
-  const marbles = values
+const ValueCol = ({ operations, valueId, classes }) => {
+  const marbles = operations
     .map(v => v.output)
     .map(v => v.find(i => i.valueId === valueId))
     .map(
       (v, k) =>
         v !== undefined ? (
-          <Marble.Marble value={v} key={k} />
+          <Marble.Marble value={v} operation={operations[k]} key={k} />
         ) : (
           <Marble.HiddenMarble key={k} />
         )
@@ -41,19 +41,23 @@ const Stream = ({ streamId, classes }) => {
   }
 
   const inspected = inspect(streamId);
-  const values = Object.values(inspected);
+  const operations = Object.values(inspected);
 
   const valueIds = R.pipe(
     R.map(v => v.output.reduce((acc, val) => [...acc, val.valueId], [])),
     R.reduce((acc, ids) => [...acc, ...ids], []),
     R.uniq
-  )(values);
+  )(operations);
 
   return (
     <div className={classes.stream}>
-      <OperationCol values={values} />
+      <OperationCol operations={operations} />
       {valueIds.map(valueId => (
-        <StyledValueCol values={values} valueId={valueId} key={valueId} />
+        <StyledValueCol
+          operations={operations}
+          valueId={valueId}
+          key={valueId}
+        />
       ))}
     </div>
   );
