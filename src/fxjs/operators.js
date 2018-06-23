@@ -86,6 +86,11 @@ export const skip = f => ({
   name: "skip"
 });
 
+export const take = f => ({
+  transform: () => rxop.take(f),
+  name: "take"
+});
+
 export const tap = f => ({
   transform: () => rxop.tap(v => f(v.value)),
   name: "tap"

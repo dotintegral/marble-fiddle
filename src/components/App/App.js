@@ -31,13 +31,13 @@ class App extends Component {
     const justAStream$ = fx.of(1);
     const someStream$ = fx.of(1, 2, 3).pipe(
       fxop.concat(justAStream$),
-      fxop.map(x => x * x),
-      fxop.count()
+      fxop.map(x => x * x)
     );
 
     const myStream$ = fx.of(1, 2, 3, 4, 5, 6, 7).pipe(
       fxop.concat(someStream$),
       fxop.map(x => x + 1),
+      fxop.take(5),
       fxop.scan((acc, x) => acc + x, 0),
       fxop.filter(x => x % 2 === 0),
       fxop.map(x => x * 2),
