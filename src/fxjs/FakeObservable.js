@@ -23,7 +23,8 @@ const FakeObservable = cb => {
     FakeObservable(id => ({
       stream$: stream$.pipe(
         rxop.tap(before({ streamId, observableId: id })),
-        f.transform(),
+        rxop.map(v => ({ ...v, streamId })),
+        f.transform(streamId),
         rxop.tap(after({ streamId, observableId: id }))
       ),
       name: f.name,
@@ -32,6 +33,9 @@ const FakeObservable = cb => {
 
   return {
     stream$,
+    streamId,
+    observableId,
+
     pipe: (f, ...moreFunctions) => {
       if (moreFunctions && moreFunctions.length > 0) {
         return createFO(f).pipe(...moreFunctions);

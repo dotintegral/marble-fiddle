@@ -3,6 +3,7 @@ import withStyles from "react-jss";
 import * as R from "ramda";
 import * as fx from "../../fxjs";
 import * as fxop from "../../fxjs/operators";
+import { getStreamIdByName } from "../../fxjs/id";
 
 import * as rxop from "rxjs/operators";
 
@@ -27,24 +28,30 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const s$ = fx.of(1, 2);
-    const s1$ = fx.of(1, 2);
+    const justAStream$ = fx.of(1);
+    const someStream$ = fx.of(1, 2, 3).pipe(
+      fxop.concat(justAStream$),
+      fxop.map(x => x * x),
+      fxop.count()
+    );
 
-    fx.of(1, 2, 3, 4, 5, 6, 7)
-      .pipe(
-        fxop.merge(s$),
-        fxop.concat(s1$),
-        fxop.map(x => x + 1),
-        fxop.scan((acc, x) => acc + x, 0),
-        fxop.filter(x => x % 2 === 0),
-        fxop.map(x => x * 2),
-        fxop.map(x => "" + x),
-        fxop.mapTo("s"),
-        fxop.tap(console.log)
-      )
-      .subscribe(x => console.log(x), null, () => {
-        this.setState({ streamId: 2 });
-      });
+    const myStream$ = fx.of(1, 2, 3, 4, 5, 6, 7).pipe(
+      fxop.concat(someStream$),
+      fxop.map(x => x + 1),
+      fxop.scan((acc, x) => acc + x, 0),
+      fxop.filter(x => x % 2 === 0),
+      fxop.map(x => x * 2),
+      fxop.map(x => "" + x),
+      fxop.mapTo("s")
+    );
+
+    fx.name("myStream$", myStream$);
+    fx.name("justAStream$", justAStream$);
+    fx.name("someStream$", someStream$);
+
+    myStream$.subscribe(() => {}, null, () => {
+      this.setState({ streamId: getStreamIdByName("myStream$") });
+    });
   }
 
   render() {

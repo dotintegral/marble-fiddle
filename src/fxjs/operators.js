@@ -10,11 +10,12 @@ export const concat = args => {
 
 // TODO should be next time/stream
 export const count = f => ({
-  transform: () => stream$ =>
+  transform: streamId => stream$ =>
     stream$.pipe(
       rxop.count(),
       rxop.map(v => ({
         value: v,
+        streamId,
         valueId: nextValue()
       }))
     ),

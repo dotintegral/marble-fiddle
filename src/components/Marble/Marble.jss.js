@@ -6,7 +6,9 @@ export const marble = {
   lineHeight: "32px",
   margin: "2px 3px",
   border: "solid 1px black",
-  fontFamily: "'Source Code Pro', monospace"
+  fontFamily: "'Source Code Pro', monospace",
+  position: "relative",
+  zIndex: 2
 };
 
 export const marbleNumber = {
@@ -21,8 +23,19 @@ export const marbleCreated = {
   background: "#ffff99"
 };
 
+export const marbleCombined = {
+  background: "#ffff99"
+};
+
 export const marbleGeneric = {
   background: "white"
+};
+
+export const placeholderMarble = {
+  height: 34,
+  width: 40,
+  margin: "2px 0",
+  position: "relative"
 };
 
 export const hiddenMarble = {
@@ -38,6 +51,6 @@ export const hiddenMarble = {
     top: 17,
     width: 38,
     height: 1,
-    background: "#eeeeee"
+    background: "rgba(0,0,0,0.1)"
   }
 };

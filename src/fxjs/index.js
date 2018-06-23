@@ -1,7 +1,13 @@
 import * as rx from "rxjs";
 
 import FakeObservable from "./FakeObservable";
-import { nextStream, nextValue } from "./id";
+import { nextStream, nextValue, setStreamName } from "./id";
+
+export const name = (name, fake$) => {
+  if (typeof fake$.streamId !== "undefined") {
+    setStreamName(fake$.streamId, name);
+  }
+};
 
 export const of = (...values) => {
   const streamId = nextStream();

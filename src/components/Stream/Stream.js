@@ -1,8 +1,8 @@
 import React from "react";
 import withStyles from "react-jss";
-import * as R from "ramda";
 
 import { inspect } from "../../fxjs/inspector";
+import { getStreamName } from "../../fxjs/id";
 import OperationCol from "../Operation";
 
 import Marble from "../Marble";
@@ -35,6 +35,16 @@ const StyledValueCol = withStyles(styles)(ValueCol);
 //
 //
 
+const StreamHeader = ({ classes, streamId }) => {
+  if (getStreamName(streamId)) {
+    return (
+      <div className={classes.streamHeader}>{getStreamName(streamId)}</div>
+    );
+  }
+
+  return null;
+};
+
 const Stream = ({ streamId, classes }) => {
   if (streamId === null || streamId === undefined) {
     return null;
@@ -43,22 +53,10 @@ const Stream = ({ streamId, classes }) => {
   const inspected = inspect(streamId);
   const operations = Object.values(inspected);
 
-  const valueIds = R.pipe(
-    R.map(v => v.output.reduce((acc, val) => [...acc, val.valueId], [])),
-    R.reduce((acc, ids) => [...acc, ...ids], []),
-    R.uniq
-  )(operations);
-
   return (
     <div className={classes.stream}>
+      <StreamHeader classes={classes} streamId={streamId} />
       <OperationCol operations={operations} />
-      {valueIds.map(valueId => (
-        <StyledValueCol
-          operations={operations}
-          valueId={valueId}
-          key={valueId}
-        />
-      ))}
     </div>
   );
 };

@@ -7,18 +7,14 @@ import * as styles from "./Marble.jss";
 
 const marbleClasses = ({ classes, operation, value }) => {
   const result = [classes.marble];
-  const combinationFunctions = ["concat", "merge"];
 
   if (Object.keys(fxjs).includes(operation.name)) {
     result.push(classes.marbleCreated);
     return result.join(" ");
   }
 
-  if (
-    operation.streamId !== value.streamId &&
-    combinationFunctions.includes(operation.name)
-  ) {
-    result.push(classes.marbleCreated);
+  if (operation.streamId !== value.streamId) {
+    result.push(classes.marbleCombined);
     return result.join(" ");
   }
 
@@ -49,7 +45,12 @@ const Marble = ({ value, operation, classes }) => (
 
 const HiddenMarble = ({ classes }) => <div className={classes.hiddenMarble} />;
 
+const PlaceholderMarble = ({ classes }) => (
+  <div className={classes.placeholderMarble} />
+);
+
 export default {
   HiddenMarble: withStyles(styles)(HiddenMarble),
+  PlaceholderMarble: withStyles(styles)(PlaceholderMarble),
   Marble: withStyles(styles)(Marble)
 };
